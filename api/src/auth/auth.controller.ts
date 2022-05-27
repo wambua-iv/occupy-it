@@ -27,8 +27,8 @@ export class AuthController {
     return this.authService.signIn(dto);
   }
 
-  @Public()
-  @Get('google/signin')
-  @HttpCode(HttpStatus.OK)
-  async signInWithGoogle() {}
+  // @Public()
+  // @Get('google/signin')
+  // @HttpCode(HttpStatus.OK)
+  // async signInWithGoogle() {}
 }
