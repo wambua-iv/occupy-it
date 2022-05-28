@@ -17,7 +17,7 @@ export class Users {
   @Prop()
   role: string;
 
-  @Prop({ unique: true, required: true })
+  @Prop({ unique: true })
   ID: number;
 
   @Prop({ unique: true, required: true })

@@ -12,6 +12,4 @@ RUN rimraf ./dist
 
 COPY . .
 
-EXPOSE 3090
-
 CMD ["yarn", "start:dev"]
