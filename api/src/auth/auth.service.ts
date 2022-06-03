@@ -1,9 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  InternalServerErrorException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
@@ -22,9 +17,7 @@ export class AuthService {
 
   async signUp(
     dto: SignUpAuthDto,
-  ): Promise<
-    void | { access_token: string; refresh_token: string } | ForbiddenException
-  > {
+  ): Promise<void | { access_token: string; refresh_token: string } | ForbiddenException> {
     const hash = await argon.hash(dto.password);
     const user = new this.User({
       name: {
@@ -41,25 +34,18 @@ export class AuthService {
       .then(async (createdUser) => {
         const tokens = await this.signToken(createdUser.email, createdUser._id);
 
-        await this.updateUserRefreshToken(
-          tokens.refresh_token,
-          createdUser.email,
-        );
+        await this.updateUserRefreshToken(tokens.refresh_token, createdUser.email);
 
         return tokens;
       })
       .catch((err) =>
-        err.code === 11000
-          ? new ForbiddenException('Credentials alrady exist')
-          : new InternalServerErrorException(),
+        err.code === 11000 ? new ForbiddenException('Credentials alrady exist') : new InternalServerErrorException(),
       );
   }
 
   async signIn(
     dto: SignInAuthDto,
-  ): Promise<
-    void | { access_token: string; refresh_token: string } | ForbiddenException
-  > {
+  ): Promise<void | { access_token: string; refresh_token: string } | ForbiddenException> {
     return await this.User.findOne({ email: dto.email })
       .then(async (exists) => {
         const verifyHash = await argon.verify(exists.hash, dto.password);
@@ -109,10 +95,7 @@ export class AuthService {
     }
   }
 
-  async signToken(
-    email: string,
-    userId: string,
-  ): Promise<{ access_token: string; refresh_token: string }> {
+  async signToken(email: string, userId: string): Promise<{ access_token: string; refresh_token: string }> {
     const accessSecret = this.config.get('JWT_SECRET');
     const refreshSecret = this.config.get('JWT_REFRESH_SECRET');
     const payload = {
