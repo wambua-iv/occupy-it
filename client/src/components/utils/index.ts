@@ -1,3 +1,2 @@
-export { Divider, HorizontalDivider } from './Divider';
-export { CustomSelect } from './CustomInput';
-export { CustomButton } from './CustomButton';
+export { MiniatureProfile } from './MiniatureProfile';
+export { SearchBar } from './SearchBar';
