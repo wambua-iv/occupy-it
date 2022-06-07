@@ -2,7 +2,7 @@ import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { AppBarTwicked, ToolBarTwicked } from '../../styles/layoutStyles';
-import { CustomButton } from '../utils';
+import { CustomButton } from '../../styles';
 
 function Header() {
   return (
