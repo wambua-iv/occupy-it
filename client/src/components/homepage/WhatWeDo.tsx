@@ -2,7 +2,7 @@ import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import AdvertisementIcon from '../../icons/AdverstisementIcon';
 import BedandBreakfastIcon from '../../icons/BedandBreakfastIcon';
 import LandLordIcon from '../../icons/LandLordIcon';
-import { HorizontalDivider } from '../utils';
+import { HorizontalDivider } from '../../styles';
 
 interface CardInterface {
   category: string;

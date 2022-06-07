@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, CardMedia, Container, Typography } from '@mui/material';
-import { CustomButton } from '../utils';
+import { CustomButton } from '../../styles';
 
 
 
@@ -92,8 +92,6 @@ function Hero() {
             component="img"
             src="/home.jpg"
             sx={{
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: '200%',
               padding: '0.5rem',
               backgroundColor: '#e5e5e5',
               width: '13rem',

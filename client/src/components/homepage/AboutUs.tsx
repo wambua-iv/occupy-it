@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
-import { CustomButton } from '../utils';
+import { CustomButton } from '../../styles'
 import {
   ArrowRight,
   PaymentOutlined,
