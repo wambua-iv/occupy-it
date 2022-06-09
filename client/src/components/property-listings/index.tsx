@@ -8,7 +8,7 @@ function PropertyListings() {
 
   return (
     <Container maxWidth='lg'>
-        <Box sx={{ my:6,}}>
+        <Box sx={{ my:6, }}>
             <SearchBar />
         </Box>
         <Listings />
