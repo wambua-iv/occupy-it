@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { CustomContainer } from '../../styles';
 
@@ -46,7 +46,7 @@ function Listings() {
     },
   ];
   return (
-    <CustomContainer>
+    <Container maxWidth='lg' sx={CustomContainer}>
       <Box sx={{p: 2, backgroundColor: '#e5e5e5', borderRadius: '.5rem' }}>
         <Typography variant="h5">Listed Properties</Typography>
         <Box sx={{my: 2}}>
@@ -59,7 +59,7 @@ function Listings() {
           </Grid>
         </Box>
       </Box>
-    </CustomContainer>
+    </Container>
   );
 }
 
