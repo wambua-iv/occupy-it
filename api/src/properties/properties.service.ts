@@ -11,4 +11,24 @@ export class PropertiesService {
   async getPropertiesByType(dto: PropertyTypeDto) {
     return await this.Property.aggregate([{ $match: { type: dto.type } }, { $project: { type: 1 } }]);
   }
+
+  async getPropertyById() {
+    return await this.Property.find();
+  }
+
+  async postNewProperty() {
+    return null;
+  }
+
+  async updatePropertyInfo() {
+    return null;
+  }
+
+  async getTenantInfo() {
+    return null;
+  }
+
+  async getPaymentInfo() {
+    return null;
+  }
 }

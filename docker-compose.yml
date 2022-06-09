@@ -1,0 +1,72 @@
+version: "3"
+services:
+  api:
+    image: occupyitapi
+    container_name: occupyitapi
+    restart: always
+    env_file: ./api/.env
+    stdin_open: true
+    tty: true
+    build: 
+      context: api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/usr/api/
+      - /usr/api/node_modules
+    ports:
+      - 3090:3090
+    networks:
+      - OccupyIt
+
+  client:
+    image: occupyitclient
+    container_name: occupyitclient
+    restart: always
+    env_file: ./client/.env
+    stdin_open: true
+    tty: true
+    build: 
+      context: client
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/usr/api/
+      - /usr/api/node_modules
+    ports:
+      - 4090:4090
+    networks:
+      - OccupyIt
+
+  mongoDb:
+    image: mongo
+    container_name: mongoDb
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    env_file: 
+      - docker.env
+    volumes:
+      - OccupyIt:/data/db
+    networks:
+      - OccupyIt
+
+  mongo-express:
+    image: mongo-express
+    container_name: db_conn
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: messy
+      ME_CONFIG_MONGODB_ADMINPASSWORD: messy4iv
+      ME_CONFIG_MONGODB_SERVER: mongoDb
+      ME_CONFIG_MONGODB_URL: mongoDb://messy:messy4iv@mongo:27017/
+    networks:
+      - OccupyIt
+  
+networks:
+    OccupyIt:
+      driver: bridge
+
+volumes:
+  OccupyIt:
+    driver: local
