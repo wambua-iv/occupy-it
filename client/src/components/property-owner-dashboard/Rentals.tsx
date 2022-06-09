@@ -68,7 +68,7 @@ function Rentals() {
     },
   ];
   return (
-    <CustomContainer>
+    <Container maxWidth='lg' sx={CustomContainer}>
       <Box sx={{ p: 2, backgroundColor: '#e5e5e5', borderRadius: '.5rem' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h5" sx={{ width: '60%' }}>
@@ -103,7 +103,7 @@ function Rentals() {
           </Grid>
         </Box>
       </Box>
-    </CustomContainer>
+    </Container>
   );
 }
 
