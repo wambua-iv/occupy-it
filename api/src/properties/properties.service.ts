@@ -1,34 +1,107 @@
-import { Properties, PropertiesDocument } from '@/models/properties.models';
+import { Payments, PaymentDocument, Properties, PropertiesDocument } from '@/models';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { PropertyTypeDto } from './dto';
+import mongoose, { Model } from 'mongoose';
+import { CreatePropertyDto, TenantDto, PropertyTypeDto, PaymentDto } from './dto';
+import { PropertyIdDto } from './dto/property.dto';
 
 @Injectable()
 export class PropertiesService {
-  constructor(@InjectModel(Properties.name) private Property: Model<PropertiesDocument>) {}
+  constructor(
+    @InjectModel(Properties.name) private Property: Model<PropertiesDocument>,
+    @InjectModel(Payments.name) private Payment: Model<PaymentDocument>,
+  ) {}
 
   async getPropertiesByType(dto: PropertyTypeDto) {
-    return await this.Property.aggregate([{ $match: { type: dto.type } }, { $project: { type: 1 } }]);
+    return await this.Property.aggregate([
+      { $match: { type: dto.type } },
+      { $project: { type: 1, name: 1, location: 1, price: 1 } },
+    ]);
   }
 
   async getPropertyById() {
     return await this.Property.find();
   }
 
-  async postNewProperty() {
-    return null;
+  async createPropertyListing(dto: CreatePropertyDto) {
+    const newListing = new this.Property({
+      type: dto.type,
+      name: dto.name,
+      description: dto.description,
+      location: dto.location,
+      price: dto.price,
+    });
+
+    return await newListing
+      .save()
+      .then((data) => ({
+        _id: data._id,
+      }))
+      .catch((err) => console.log(err));
+  }
+
+  async bookProperty(dto: TenantDto) {
+    return await this.Property.updateOne(
+      { _id: dto._id },
+      {
+        $push: {
+          tenants: {
+            name: dto.name,
+            id: dto.id,
+            current: dto.current,
+          },
+        },
+      },
+    ).catch((err) => console.log(err));
   }
 
   async updatePropertyInfo() {
     return null;
   }
 
-  async getTenantInfo() {
-    return null;
+  async getTenantInfo(dto: PropertyIdDto) {
+    return await this.Property.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(dto.id), 'tenants.current': true } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'tenants.id',
+          foreignField: 'ID',
+          as: 'tenant_info',
+        },
+      },
+      { $unwind: '$tenant_info' },
+      {
+        $project: {
+          _id: 1,
+          'tenants.current': 1,
+          name: 1,
+          location: 1,
+          'tenant_info.name': 1,
+          'tenant_info.ID': 1,
+          'tenant_info.mobile': 1,
+          'tenant_info.email': 1,
+        },
+      },
+    ]);
   }
 
   async getPaymentInfo() {
     return null;
+  }
+
+  async makePayments(dto: PaymentDto) {
+    const Payment = new this.Payment({
+      property_id: dto.property_Id,
+      tenantId: dto.tenantId,
+      duration: dto.duration,
+      payment: dto.payment,
+      paymentFor: dto.paymentFor,
+      paymentMode: dto.paymentMode,
+    });
+
+    return await Payment.save()
+      .then((data) => ({ _id: data._id }))
+      .catch((err) => console.log(err));
   }
 }
