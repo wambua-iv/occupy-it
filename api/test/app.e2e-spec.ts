@@ -67,4 +67,104 @@ describe('AppController (e2e)', () => {
       });
     });
   });
+
+  describe('Property', () => {
+    describe('create listing', () => {
+      const createPropertyDto: CreatePropertyDto = {
+        name: 'Exectuive Apartment',
+        type: 'rental',
+        location: 'Juja',
+        description: 'two bedroom at the heart of juja town',
+        amenities: [],
+        price: 2500,
+      };
+      it('should create listing', () => {
+        return pactum
+          .spec()
+          .post('http://localhost:3080/properties/create_listing')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(createPropertyDto)
+          .stores('propertyID', '_id')
+          .inspect();
+      });
+    });
+
+    describe('find property by type', () => {
+      const findByTypeDto: PropertyTypeDto = {
+        type: 'rental',
+      };
+      it('should return properties by type', () => {
+        return pactum
+          .spec()
+          .get('http://localhost:3080/properties/type')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(findByTypeDto)
+          .inspect();
+      });
+    });
+
+    describe('book property', () => {
+      const tenantDto: TenantDto = {
+        _id: 'dsd',
+        id: 36430147,
+        name: 'Wambua Musalu',
+        current: true,
+      };
+      it('should book property', () => {
+        return pactum
+          .spec()
+          .post('http://localhost:3080/properties/book')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody({
+            ...tenantDto,
+            _id: '$S{propertyID}',
+          })
+          .inspect();
+      });
+    });
+
+    describe('get tenant info', () => {
+      it('should get tenant info', () => {
+        return pactum
+          .spec()
+          .get('http://localhost:3080/properties/tenant_info')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody({ id: '$S{propertyID}' })
+          .inspect();
+      });
+    });
+
+    describe('makepayments', () => {
+      const paymentDto: PaymentDto = {
+        property_Id: 'string',
+        tenantId: 36430147,
+        paymentMode: 'Mpesa',
+        payment: 25500,
+        paymentFor: 'deposit',
+        duration: 'June, 2022',
+      };
+
+      it('should make payment', () => {
+        return pactum
+          .spec()
+          .post('http://localhost:3080/properties/payment')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody({
+            ...paymentDto,
+            property_Id: '$S{propertyID}',
+          })
+          .inspect();
+      });
+    });
+  });
 });
