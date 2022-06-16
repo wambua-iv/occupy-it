@@ -4,8 +4,8 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as argon from 'argon2';
-import { UserDocument, Users } from 'src/models/users.models';
 import { SignInAuthDto, SignUpAuthDto } from './dto';
+import { UserDocument, Users } from '@/models';
 
 @Injectable()
 export class AuthService {
@@ -24,12 +24,13 @@ export class AuthService {
         firstname: dto.firstname,
         lastname: dto.lastname,
       },
+      email: dto.email,
       hash: hash,
       mobile: dto['phone number'],
       ID: dto.ID,
     });
 
-    return user
+    return await user
       .save()
       .then(async (createdUser) => {
         const tokens = await this.signToken(createdUser.email, createdUser._id);
@@ -38,9 +39,7 @@ export class AuthService {
 
         return tokens;
       })
-      .catch((err) =>
-        err.code === 11000 ? new ForbiddenException('Credentials alrady exist') : new InternalServerErrorException(),
-      );
+      .catch((err) => (err.code === 11000 ? new ForbiddenException('Credentials alrady exist') : console.log(err)));
   }
 
   async signIn(
