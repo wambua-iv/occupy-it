@@ -40,7 +40,7 @@ function WhatWeDo() {
     <Container
       maxWidth="lg"
       sx={{
-        mt: 12,
+        mt: 6,
       }}
     >
       <Box

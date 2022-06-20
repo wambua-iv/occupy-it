@@ -53,7 +53,7 @@ function AboutUs() {
         <Typography variant="h5" sx={{ my: 2 }}>
           We help our clients find homes by providing simplicity
         </Typography>
-        <Typography>
+        <Typography sx={{ my: 2 }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
           assumenda eaque ut. Veritatis animi sequi optio tempora similique,
           dolorem hic id tempore minima ut beatae? Possimus facere quae
