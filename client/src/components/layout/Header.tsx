@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { AppBarTwicked, ToolBarTwicked } from '../../styles/layoutStyles';
 import { CustomButton } from '../../styles';
+import Link from 'next/link';
 
 function Header() {
   return (
@@ -21,13 +22,13 @@ function Header() {
                 variant="h5"
                 sx={{
                   color: '#fff',
-                  py: 1,
+                  py: 1, 
                   px: 2,
                   backgroundColor: '#443D5E',
                   borderRadius: '1rem',
                 }}
               >
-                Occupy It
+                <Link href='/'>Occupy It</Link>
               </Typography>
               <Box
                 sx={{
@@ -39,9 +40,9 @@ function Header() {
                   color: '#7C28F2',
                 }}
               >
-                <Typography variant="h6">Home</Typography>
-                <Typography variant="h6">Services</Typography>
-                <Typography variant="h6">Projects</Typography>
+                <Typography variant='subtitle1'>Home</Typography>
+                <Typography variant='subtitle1'>Services</Typography>
+                <Typography variant='subtitle1'>Projects</Typography>
               </Box>
             </Box>
             <Box>
