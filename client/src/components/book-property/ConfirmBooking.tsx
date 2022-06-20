@@ -9,6 +9,7 @@ function ConfirmBooking() {
   })
   const WeightedTypography = styled(Typography)({
     fontWeight: 600,
+    margin: '.25rem 0',
   })
   return (
     <Box >
@@ -18,9 +19,9 @@ function ConfirmBooking() {
           component="img"
           src="/home.jpg"
           alt="home"
-          sx={{ width: '16rem', height: '13rem', borderRadius: '1rem' }}
+          sx={{ width: '14rem', height: '13rem', borderRadius: '1rem' }}
         />
-        <Box sx={{ width: '60%' }}>
+        <Box sx={{ width: '55%' }}>
           <Typography
             sx={{
               fontWeight: 600,

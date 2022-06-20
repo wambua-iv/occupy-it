@@ -70,7 +70,7 @@ function VisaCard({ date, setDate }: any) {
           </InputAdornment>
         }
         placeholder="Card Holder Name"
-        sx={{ mb: 2, width: '70%' }}
+        sx={{ mb: 2, width: '80%' }}
       />
       <Input
         startAdornment={
@@ -79,9 +79,9 @@ function VisaCard({ date, setDate }: any) {
           </InputAdornment>
         }
         placeholder="Credit Card Number"
-        sx={{ mb: 4, width: '70%', }}
+        sx={{ mb: 4, width: '80%', }}
       />
-      <Box sx={{ mb: 4, width: '70%', display: 'flex', justifyContent: 'space-between'}}>
+      <Box sx={{ mb: 4, width: '80%', display: 'flex', justifyContent: 'space-between'}}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             views={['year', 'month']}
@@ -90,7 +90,7 @@ function VisaCard({ date, setDate }: any) {
             onChange={(newValue) => {
               setDate(newValue);
             }}
-            renderInput={(params) => <TextField {...params} helperText={null} />}
+            renderInput={(params) => <TextField sx={{ width: '60%' }}{...params} helperText={null} />}
           />
         </LocalizationProvider>
         <Input
@@ -100,7 +100,7 @@ function VisaCard({ date, setDate }: any) {
           </InputAdornment>
         }
         placeholder="CVV"
-        sx={{ mb: 4, width: '20%', display: 'flex' }}
+        sx={{ mb: 4, width: '30%', display: 'flex' }}
       />
       </Box>
     </Paper>
